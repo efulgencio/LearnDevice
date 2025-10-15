@@ -7,6 +7,7 @@
 
 import UIKit
 import Security
+import Toast_Swift
 
 class ViewController: UIViewController {
     
@@ -18,6 +19,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        // Botón para mostrar un toast
+          let showButton = UIButton(type: .system)
+          showButton.setTitle("Mostrar Toast", for: .normal)
+          showButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+          showButton.addTarget(self, action: #selector(showToast), for: .touchUpInside)
+          
+          showButton.translatesAutoresizingMaskIntoConstraints = false
+          view.addSubview(showButton)
+          
+          NSLayoutConstraint.activate([
+              showButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+              showButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+          ])
+        
         setupUI()
         showDeviceInfo()
     }
@@ -88,6 +104,18 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
+    }
+    
+    @objc func showToast() {
+        // Mensaje simple
+        self.view.makeToast("Hola desde CocoaPods 👋")
+        
+        // Ejemplo avanzado con duración y posición personalizada
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.view.makeToast("Otro mensaje centrado 😎",
+                                duration: 2.5,
+                                position: .center)
+        }
     }
     
 
