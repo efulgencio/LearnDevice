@@ -39,13 +39,18 @@ rm -rf ~/Library/Developer/Xcode/DerivedData
 
 y luego
 
+```bash
 Product → Clean Build Folder (⇧⌘K)
+```
 
-Si usas CocoaPods o frameworks antiguos
 
+**Si usas CocoaPods o frameworks antiguos**
+
+```bash
 pod deintegrate
-
 pod install
+```
+
 
 revisa el podfile
 
