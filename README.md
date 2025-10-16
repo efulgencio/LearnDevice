@@ -29,6 +29,8 @@ CocoaPods descargará, integrará y gestionará automáticamente esas librerías
    ```bash
    brew install cocoapods
 
+2. **He tenido problemas con librerías versión 8 en el POD**
+
 **Limpiar el proyecto y reconstruye**
 
 rm -rf ~/Library/Developer/Xcode/DerivedData
