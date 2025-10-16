@@ -115,8 +115,11 @@ Eso fuerza a CocoaPods a recrear el proyecto de Pods desde cero aplicando el pla
 
 
 🧹 Después, limpia el build:
+
 rm -rf ~/Library/Developer/Xcode/DerivedData
+
 y en Xcode:
+
 Product → Clean Build Folder (⇧⌘K)
 
 
