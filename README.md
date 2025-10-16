@@ -35,7 +35,7 @@ CocoaPods descargará, integrará y gestionará automáticamente esas librerías
 
 ```bash
 rm -rf ~/Library/Developer/Xcode/DerivedData
-
+```
 
 y luego
 
