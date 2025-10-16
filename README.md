@@ -194,6 +194,17 @@ pod install
 Así no necesita copiar ni firmar nada dentro de _CodeSignature, y el sandbox deja de intervenir.
 
 
+🧹 2. Limpia todo el entorno de compilación
+Ejecuta los siguientes comandos en orden:
+rm -rf ~/Library/Developer/Xcode/DerivedData
+xcrun simctl erase all
+Y luego en la carpeta del proyecto:
+rm -rf Pods
+rm Podfile.lock
+pod install
+
+
+
 
 
 
