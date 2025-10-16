@@ -140,6 +140,8 @@ Ejecuta:
 grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
 Si ya no ves líneas con 8.0, ¡perfecto! 🎉
 Pero si todavía queda alguna con 8.0, fuerza el reemplazo manual con este comando 👇
+
+
 🛠 5️⃣ Reemplazo automático (seguro)
 Copia y pega este comando en tu Terminal (en la raíz del proyecto):
 find ./Pods -type f -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 8.0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g' {} +
