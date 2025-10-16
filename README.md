@@ -43,7 +43,6 @@ y luego
 Product → Clean Build Folder (⇧⌘K)
 ```
 
-
 **Si usas CocoaPods o frameworks antiguos**
 
 ```bash
@@ -51,8 +50,7 @@ pod deintegrate
 pod install
 ```
 
-
-revisa el podfile
+**Revisa el podfile**
 
 platform :ios, '13.0'
 
@@ -61,20 +59,27 @@ Cuando tengo dos XCode en el mac
 XCode_26
 XCode_16
 
-Primero activarlo en el terminal:
+**Primero activarlo en el terminal:**
 
+```bash
 sudo xcode-select -s /Applications/Xcode_16.app
+```
 
-Comprobar la ruta activa del Developer Directory
+**Comprobar la ruta activa del Developer Directory**
 
+```bash
 xcode-select -p
+```
 
-Comprobar la versión del compilador
+**Comprobar la versión del compilador**
 
+```bash
 clang --version
+```
 
-Resultado del Terminal
+**Resultado del Terminal**
 
+```bash
 eofc@ESPC028208 ~ % xcode-select -p
 /Applications/Xcode_16.app/Contents/Developer
 eofc@ESPC028208 ~ % clang --version
@@ -82,19 +87,23 @@ Apple clang version 17.0.0 (clang-1700.0.13.5)
 Target: arm64-apple-darwin24.6.0
 Thread model: posix
 InstalledDir: /Applications/Xcode_16.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
-eofc@ESPC028208 ~ % 
+eofc@ESPC028208 ~ %
+```
 
-
-Sigo teniendo problemas con "libarclite"
+**Sigo teniendo problemas con "libarclite"**
 
 Verifica el deployment target del proyecto y de los Pods
 
 Ejecuta
+
+```bash
 grep -r "IPHONEOS_DEPLOYMENT_TARGET" .
+```
+
 
 Si ves algo como:
-Pods/SomeLibrary/... iOS 9.0
-esa librería está causando el error.
+
+Pods/SomeLibrary/... iOS 9.0 (Esa librería está causando el error.)
 
 He ejutado y muestra
 
