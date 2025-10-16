@@ -40,6 +40,7 @@ Product → Clean Build Folder (⇧⌘K)
 Si usas CocoaPods o frameworks antiguos
 
 pod deintegrate
+
 pod install
 
 revisa el podfile
@@ -47,6 +48,7 @@ revisa el podfile
 platform :ios, '13.0'
 
 Cuando tengo dos XCode en el mac
+
 XCode_26
 XCode_16
 
@@ -55,9 +57,11 @@ Primero activarlo en el terminal:
 sudo xcode-select -s /Applications/Xcode_16.app
 
 Comprobar la ruta activa del Developer Directory
+
 xcode-select -p
 
 Comprobar la versión del compilador
+
 clang --version
 
 Resultado del Terminal
@@ -90,15 +94,21 @@ He ejutado y muestra
 Ahí está el error
 
 Solución definitiva
+
 1️⃣ Abre tu Podfile y añade al principio:
+
 platform :ios, '13.0'
+
 (puedes poner 14.0 o 15.0 si quieres, pero 13.0 es el mínimo compatible con Xcode 16)
 
 
 Perfecto 👌 — gracias por mostrar tu Podfile.
+
 Ya tienes:
 platform :ios, '15.0'
+
 ✅ Eso está bien (15.0 es suficientemente alto).
+
 Pero el problema persiste porque cuando instalaste los Pods por primera vez, ese valor no existía o era más bajo, y entonces CocoaPods dejó los valores antiguos (iOS 8.0) guardados dentro del archivo:
 
 Pods/Pods.xcodeproj/project.pbxproj
@@ -107,10 +117,15 @@ Así que aunque ahora tu Podfile está bien, el proyecto de Pods sigue arrastran
 
 🔧 Solución exacta
 Ejecuta en la raíz del proyecto estos comandos (copiar y pegar):
+
 rm -rf Pods
+
 rm Podfile.lock
+
 pod deintegrate
+
 pod install
+
 Eso fuerza a CocoaPods a recrear el proyecto de Pods desde cero aplicando el platform :ios, '15.0' correctamente a todos los targets.
 
 
@@ -124,13 +139,18 @@ Product → Clean Build Folder (⇧⌘K)
 
 
 Ejecuta de nuevo:
+
 grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
+
 Ahora deberías ver solo valores iguales o superiores a 15.0.
 
 
 Compila de nuevo
+
 El error:
+
 SDK does not contain 'libarclite' ...
+
 debería desaparecer completamente.
 
 He aplicado la solución propuesta y sigue habiendo una librería 8.0
@@ -178,6 +198,7 @@ Edita el Podfile así:
 platform :ios, '15.0'
 
 # Usa frameworks estáticos (evita la copia de .framework dinámicos)
+
 use_frameworks! :linkage => :static
 
 target 'LearnDevice' do
