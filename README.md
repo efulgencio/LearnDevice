@@ -29,7 +29,7 @@ CocoaPods descargará, integrará y gestionará automáticamente esas librerías
    ```bash
    brew install cocoapods
 
-Limpiar el proyecto y reconstruye
+**Limpiar el proyecto y reconstruye**
 
 rm -rf ~/Library/Developer/Xcode/DerivedData
 
