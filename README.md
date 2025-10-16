@@ -128,6 +128,22 @@ El error:
 SDK does not contain 'libarclite' ...
 debería desaparecer completamente.
 
+He aplicado la solución propuesta y sigue habiendo una librería 8.0
+
+🧱 2️⃣ Reinstala los Pods desde cero
+Ejecuta:
+pod install --repo-update
+El flag --repo-update fuerza a CocoaPods a actualizar su lista de Pods y aplicar correctamente el platform :ios, '15.0'.
+
+🧠 4️⃣ Verifica si aún existe “8.0”
+Ejecuta:
+grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
+Si ya no ves líneas con 8.0, ¡perfecto! 🎉
+Pero si todavía queda alguna con 8.0, fuerza el reemplazo manual con este comando 👇
+🛠 5️⃣ Reemplazo automático (seguro)
+Copia y pega este comando en tu Terminal (en la raíz del proyecto):
+find ./Pods -type f -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 8.0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g' {} +
+
 
 
 
