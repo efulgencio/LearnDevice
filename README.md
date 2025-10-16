@@ -111,7 +111,8 @@ He ejutado y muestra
 
 Ahí está el error
 
-Solución definitiva
+
+**Solución definitiva**
 
 1️⃣ Abre tu Podfile y añade al principio:
 
@@ -127,29 +128,33 @@ platform :ios, '15.0'
 
 ✅ Eso está bien (15.0 es suficientemente alto).
 
-Pero el problema persiste porque cuando instalaste los Pods por primera vez, ese valor no existía o era más bajo, y entonces CocoaPods dejó los valores antiguos (iOS 8.0) guardados dentro del archivo:
+Pero el problema persiste porque cuando instalaste los Pods por primera vez, ese valor no existía o era más bajo,
+y entonces CocoaPods dejó los valores antiguos (iOS 8.0) guardados dentro del archivo:
 
 Pods/Pods.xcodeproj/project.pbxproj
 
 Así que aunque ahora tu Podfile está bien, el proyecto de Pods sigue arrastrando la configuración vieja.
 
 🔧 Solución exacta
+
 Ejecuta en la raíz del proyecto estos comandos (copiar y pegar):
 
+```bash
 rm -rf Pods
-
 rm Podfile.lock
-
 pod deintegrate
-
 pod install
+```
 
 Eso fuerza a CocoaPods a recrear el proyecto de Pods desde cero aplicando el platform :ios, '15.0' correctamente a todos los targets.
 
 
 🧹 Después, limpia el build:
 
+```bash
 rm -rf ~/Library/Developer/Xcode/DerivedData
+```
+
 
 y en Xcode:
 
@@ -158,7 +163,10 @@ Product → Clean Build Folder (⇧⌘K)
 
 Ejecuta de nuevo:
 
+```bash
 grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
+```
+
 
 Ahora deberías ver solo valores iguales o superiores a 15.0.
 
@@ -171,13 +179,14 @@ SDK does not contain 'libarclite' ...
 
 debería desaparecer completamente.
 
-He aplicado la solución propuesta y sigue habiendo una librería 8.0
+**He aplicado la solución propuesta y sigue habiendo una librería 8.0**
 
 🧱 2️⃣ Reinstala los Pods desde cero
 Ejecuta:
 
+```bash
 pod install --repo-update
-
+```
 
 El flag --repo-update fuerza a CocoaPods a actualizar su lista de Pods y aplicar correctamente el platform :ios, '15.0'.
 
@@ -185,7 +194,9 @@ El flag --repo-update fuerza a CocoaPods a actualizar su lista de Pods y aplicar
 
 Ejecuta:
 
+```bash
 grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
+```
 
 Si ya no ves líneas con 8.0, ¡perfecto! 🎉
 
@@ -196,8 +207,9 @@ Pero si todavía queda alguna con 8.0, fuerza el reemplazo manual con este coman
 
 Copia y pega este comando en tu Terminal (en la raíz del proyecto):
 
+```bash
 find ./Pods -type f -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 8.0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g' {} +
-
+```
 
 Este comando:
 
@@ -207,40 +219,52 @@ Reemplaza todas las ocurrencias de IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 
 Las cambia a IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 
+**Ahora que me compila bién el problema viene que no ejecuta, da error permisos**
 
 IMPORTANTE
-🧩 1. Cambia tu Podfile para usar frameworks estáticos
+**🧩 1. Cambia tu Podfile para usar frameworks estáticos**
 
 Edita el Podfile así:
-
+```
 platform :ios, '15.0'
+```
 
-# Usa frameworks estáticos (evita la copia de .framework dinámicos)
+**# Usa frameworks estáticos (evita la copia de .framework dinámicos)**
 
+```
 use_frameworks! :linkage => :static
 
 target 'LearnDevice' do
   pod 'Toast-Swift', '~> 5.0.1'
 end
+```
 
-Guarda y luego en terminal:
+**Guarda y luego en terminal**
 
+```
 pod deintegrate
 pod install
+```
 
 
 ⚙️ Esto hace que Toast-Swift se integre como librería estática, no como .framework dinámico.
 Así no necesita copiar ni firmar nada dentro de _CodeSignature, y el sandbox deja de intervenir.
 
 
-🧹 2. Limpia todo el entorno de compilación
+**🧹 2. Limpia todo el entorno de compilación**
+
 Ejecuta los siguientes comandos en orden:
+
+```
 rm -rf ~/Library/Developer/Xcode/DerivedData
 xcrun simctl erase all
 Y luego en la carpeta del proyecto:
 rm -rf Pods
 rm Podfile.lock
 pod install
+```
+
+
 
 
 
