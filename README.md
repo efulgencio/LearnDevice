@@ -100,7 +100,9 @@ Ya tienes:
 platform :ios, '15.0'
 ✅ Eso está bien (15.0 es suficientemente alto).
 Pero el problema persiste porque cuando instalaste los Pods por primera vez, ese valor no existía o era más bajo, y entonces CocoaPods dejó los valores antiguos (iOS 8.0) guardados dentro del archivo:
+
 Pods/Pods.xcodeproj/project.pbxproj
+
 Así que aunque ahora tu Podfile está bien, el proyecto de Pods sigue arrastrando la configuración vieja.
 
 🔧 Solución exacta
@@ -132,24 +134,36 @@ He aplicado la solución propuesta y sigue habiendo una librería 8.0
 
 🧱 2️⃣ Reinstala los Pods desde cero
 Ejecuta:
+
 pod install --repo-update
+
+
 El flag --repo-update fuerza a CocoaPods a actualizar su lista de Pods y aplicar correctamente el platform :ios, '15.0'.
 
 🧠 4️⃣ Verifica si aún existe “8.0”
+
 Ejecuta:
+
 grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
+
 Si ya no ves líneas con 8.0, ¡perfecto! 🎉
+
 Pero si todavía queda alguna con 8.0, fuerza el reemplazo manual con este comando 👇
 
 
 🛠 5️⃣ Reemplazo automático (seguro)
+
 Copia y pega este comando en tu Terminal (en la raíz del proyecto):
+
 find ./Pods -type f -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 8.0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g' {} +
 
 
 Este comando:
+
 Busca en todos los Pods/project.pbxproj
+
 Reemplaza todas las ocurrencias de IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+
 Las cambia a IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 
 
