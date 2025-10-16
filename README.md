@@ -147,6 +147,12 @@ Copia y pega este comando en tu Terminal (en la raíz del proyecto):
 find ./Pods -type f -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 8.0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g' {} +
 
 
+Este comando:
+Busca en todos los Pods/project.pbxproj
+Reemplaza todas las ocurrencias de IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+Las cambia a IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+
+
 
 
 
