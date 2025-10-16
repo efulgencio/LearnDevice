@@ -170,6 +170,32 @@ Reemplaza todas las ocurrencias de IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 Las cambia a IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 
 
+IMPORTANTE
+🧩 1. Cambia tu Podfile para usar frameworks estáticos
+
+Edita el Podfile así:
+
+platform :ios, '15.0'
+
+# Usa frameworks estáticos (evita la copia de .framework dinámicos)
+use_frameworks! :linkage => :static
+
+target 'LearnDevice' do
+  pod 'Toast-Swift', '~> 5.0.1'
+end
+
+Guarda y luego en terminal:
+
+pod deintegrate
+pod install
+
+
+⚙️ Esto hace que Toast-Swift se integre como librería estática, no como .framework dinámico.
+Así no necesita copiar ni firmar nada dentro de _CodeSignature, y el sandbox deja de intervenir.
+
+
+
+
 
 
 
