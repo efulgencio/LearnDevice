@@ -33,7 +33,9 @@ CocoaPods descargará, integrará y gestionará automáticamente esas librerías
 
 **Limpiar el proyecto y reconstruye**
 
+```bash
 rm -rf ~/Library/Developer/Xcode/DerivedData
+
 
 y luego
 
