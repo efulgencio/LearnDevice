@@ -28,4 +28,4 @@ CocoaPods descargará, integrará y gestionará automáticamente esas librerías
 
    ```bash
    brew install cocoapods
-
+   
