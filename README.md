@@ -95,6 +95,42 @@ platform :ios, '13.0'
 (puedes poner 14.0 o 15.0 si quieres, pero 13.0 es el mínimo compatible con Xcode 16)
 
 
+Perfecto 👌 — gracias por mostrar tu Podfile.
+Ya tienes:
+platform :ios, '15.0'
+✅ Eso está bien (15.0 es suficientemente alto).
+Pero el problema persiste porque cuando instalaste los Pods por primera vez, ese valor no existía o era más bajo, y entonces CocoaPods dejó los valores antiguos (iOS 8.0) guardados dentro del archivo:
+Pods/Pods.xcodeproj/project.pbxproj
+Así que aunque ahora tu Podfile está bien, el proyecto de Pods sigue arrastrando la configuración vieja.
+
+🔧 Solución exacta
+Ejecuta en la raíz del proyecto estos comandos (copiar y pegar):
+rm -rf Pods
+rm Podfile.lock
+pod deintegrate
+pod install
+Eso fuerza a CocoaPods a recrear el proyecto de Pods desde cero aplicando el platform :ios, '15.0' correctamente a todos los targets.
+
+
+🧹 Después, limpia el build:
+rm -rf ~/Library/Developer/Xcode/DerivedData
+y en Xcode:
+Product → Clean Build Folder (⇧⌘K)
+
+
+Ejecuta de nuevo:
+grep -r "IPHONEOS_DEPLOYMENT_TARGET" ./Pods
+Ahora deberías ver solo valores iguales o superiores a 15.0.
+
+
+Compila de nuevo
+El error:
+SDK does not contain 'libarclite' ...
+debería desaparecer completamente.
+
+
+
+
 
 
 
